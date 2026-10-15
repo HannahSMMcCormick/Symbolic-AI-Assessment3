@@ -1,0 +1,18 @@
+(define(domain avatar))
+
+(:requirements :strips :typing)
+
+(:types
+
+    #avatar, elements,subbending, location, 
+
+
+
+)
+
+
+
+(:predicates)
+
+
+(:actions)
