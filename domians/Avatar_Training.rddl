@@ -1,0 +1,165 @@
+domain avatar {
+
+    requirements {
+        multivalued, 
+        intermediate-nodes, 
+        partially-observed,
+        reward_deterministic };
+
+
+    types {
+
+            element: {@fire,@air,@water,@earth};
+            capabilities: {@non-bender,@bender,@avatar};
+            location: object;
+            character: object;
+            character-type: object;
+            nation: object;
+            level: {@non-bender,@novice,@intermediate,@master,@avatar};
+            avatar-state: object;
+            
+            };
+    
+    
+    pvariables {
+
+
+        NATION-ELEMENT(nation):{non-fluent, element};
+        avatar-element-born:{state-fluent,element};
+        avatar-location-born:{state-fluent,location};
+        avatar-state(character): {state-fluent, avatar-state};
+        avatar-location:{state-fluent,location};
+        next-element-to-learn: {state-fluent, element};
+       
+
+        bending-status(character, element): {state-fluent, level};
+        elemental-affinity(character, element): {non-fluent, bool};
+        nation-affiliation(character, nation): {non-fluent, bool};
+
+        character-type(character): {state-fluent, character-type};
+        level(character): {state-fluent, level};
+
+        whereabouts(character): {state-fluent, location};
+        connected(location, location): {state-fluent,bool};
+        person-location(character, location): {state-fluent, bool};
+
+        move-to(character,location): {action-fluent, bool};
+        close-path(location,location):{action-fluent,bool};
+        train(character,element):{action-fluent,bool};
+        trains-element(location,element):{non-fluent,bool};
+    
+
+
+
+    };
+
+    cpfs {
+    
+
+    
+    avatar-element-born'=
+
+        if ($turn == 0) then [
+            discrete(element,
+            @fire: 0.25,
+            @air: 0.25,
+            @water:0.25,
+            @earth: 0.25)
+
+        ] 
+        
+        else[
+        
+        avatar-element-born;
+
+        ];
+
+
+    next-element-to-learn' = 
+
+    if ($turn == 0) then
+        avatar-element-born
+
+
+
+    else if (exists_[?e:element]{
+        train(avatar,?e)^
+        (?e == next-element-to-learn)
+
+
+    } )
+
+    then
+
+        if (next-element-to-learn == @fire) then @air
+        else if (next-element-to-learn == @air) then @water
+        else if (next-element-to-learn == @water) then @earth
+        else @fire
+
+    else
+        next-element-to-learn;
+
+
+    avatar-location-born' = 
+
+        if ($turn == 0) then [
+
+           avatar-location
+
+        ]
+
+        else[
+
+            avatar-location-born;
+
+        ];
+
+
+
+        person-location'(?c,?to) = 
+        
+        if (move-to(?c,?to) ^ 
+        exists_[?from:location]{
+            person-location(?c,?from)^connected(?from,?to)
+
+        } )
+        
+        then
+        
+            true
+        else if (exists_[?target:location]{move-to(?c,?target)})
+        
+        then
+        
+            false
+        
+        else
+        
+            person-location(?c,?to);
+
+
+        connected'(?from,?to) = 
+            if (close-path(?from,?to) |
+            close-path(?to,?from))
+            then false
+            else connected(?from,?to);
+        
+
+    //Need to add in logic to stop person being in two locations at once and 
+
+
+
+    
+    };
+    reward = 0.0;
+    state-invariants {};
+    action-preconditions {};
+    termination {};
+
+
+
+
+
+
+}
+

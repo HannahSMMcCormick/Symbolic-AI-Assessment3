@@ -1,0 +1,96 @@
+instance avatar_aang_map {
+
+    domain = avatar;
+
+    objects {
+
+            location: {
+                
+                southern-water-tribe, 
+                northern-water-tribe,
+                northern-air-temple,
+                eastern-air-temple,
+                southern-air-temple,
+                western-air-temple,
+                ba-sing-se,
+                omashu,
+                kyoshi-island,
+                fire-nation-capital,
+                ember-island,
+                crescent-island]
+
+        };
+        };
+
+        init-state {
+
+
+
+            trains-element(southern-water-tribe, @water) = true;
+            trains-element(northern-water-tribe, @water) = true;
+
+            trains-element(southern-air-temple, @air) = true;
+            trains-element(northern-air-temple, @air) = true;
+            trains-element(eastern-air-temple, @air) = true;
+            trains-element(western-air-temple, @air) = true;
+
+            trains-element(fire-nation-capital, @fire) = true;
+            trains-element(ember-island, @fire) = true;
+
+            trains-element(omashu, @earth) = true;
+            trains-element(ba-sing-se, @earth) = true;
+
+            connected(northern-water-tribe,northern-air-temple) =true;
+            connected(northern-air-temple,northern-water-tribe) =true;
+
+            connected(northern-air-temple,ba-sing-se) = true;
+            connected(ba-sing-se,northern-air-temple) = true;
+
+            connected(ba-sing-se,eastern-air-temple) = true;
+            connected(eastern-air-temple,ba-sing-se) = true;
+
+            connected(eastern-air-temple,southern-air-temple) = true;
+            connected(southern-air-temple,eastern-air-temple) = true;
+
+            connected(eastern-air-temple,southern-water-tribe) = true;
+            connected(southern-water-tribe,eastern-air-temple) = true;
+
+            connected(southern-water-tribe,southern-air-temple)=true;
+            connected(southern-air-temple,southern-water-tribe)=true;
+
+            connected(southern-air-temple,fire-nation-capital)=true;
+            connected(fire-nation-capital,southern-air-temple)=true;
+
+            connected(southern-air-temple,ember-island)=true;
+            connected(ember-island,southern-air-temple)=true;
+
+            connected(fire-nation-capital,ember-island)=true;
+            connected(ember-island,fire-nation-capital)=true;
+
+            connected(ember-island,crescent-island) = true;
+            connected(crescent-island,ember-island) = true;
+
+            connected(fire-nation-capital,western-air-temple) = true;
+            connected(western-air-temple,fire-nation-capital) = true;
+
+            connected(ember-island,western-air-temple) = true;
+            connected(western-air-temple,ember-island) = true;
+
+            connected(crescent-island,western-air-temple) = true;
+            connected(western-air-temple,crescent-island) = true;
+
+            connected(crescent-island,ba-sing-se) = true;
+            connected(ba-sing-se,crescent-island) = true;
+
+            connected(crescent-island,kyoshi-island) = true;
+            connected(kyoshi-island,crescent-island) = true;
+
+            connected(kyoshi-island,ba-sing-se) = true;
+            connected(ba-sing-se,kyoshi-island) = true;
+
+
+
+        };
+
+
+}
